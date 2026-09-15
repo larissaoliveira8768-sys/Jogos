@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlatformController : MonoBehaviour
@@ -17,6 +18,9 @@ public class PlatformController : MonoBehaviour
     
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [Header("Coin Settings")]
+    private int coinCouter=0;
+   [SerializeField] private TextMeshProUGUI coinText;
     
     // Input Actions - using your PlayerActionMap asset
     private PlayerActionMap inputActions;
@@ -158,5 +162,9 @@ public class PlatformController : MonoBehaviour
             Gizmos.color = isGrounded ? Color.green : Color.red;
             Gizmos.DrawRay(transform.position, Vector2.down * 1.1f);
         }
+    }
+    public void ChangeTextCoin(){
+        coinCouter+=1;
+        coinText.text = coinCouter.ToString();
     }
 }
