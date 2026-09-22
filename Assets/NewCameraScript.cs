@@ -3,17 +3,23 @@ using UnityEngine;
 public class NewCameraScript : MonoBehaviour
 {
     public Transform playerTransform;
-    private Vector3 playerPosition;
 
     void Start()
     {
-        playerPosition = playerTransform.position;
-        transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+        AtualizarPosicaoCamera();
     }
 
-    void Update()
+    void LateUpdate()
     {
-        playerPosition = playerTransform.position;
-        transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+        AtualizarPosicaoCamera();
+    }
+
+    private void AtualizarPosicaoCamera()
+    {
+        if (playerTransform != null)
+        {
+            Vector3 playerPosition = playerTransform.position;
+            transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+        }
     }
 }
