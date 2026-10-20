@@ -22,6 +22,8 @@ public class PlatformController : MonoBehaviour
     [Header("Coin Settings")]
     private int coinCouter=0;
    [SerializeField] private TextMeshProUGUI coinText;
+    [Header("Animation Settings")]
+    [SerializeField] private Animator anim;
     
     // Input Actions - using your PlayerActionMap asset
     private PlayerActionMap inputActions;
@@ -41,6 +43,7 @@ public class PlatformController : MonoBehaviour
         
         // Initialize input actions using YOUR PlayerActionMap asset
         inputActions = new PlayerActionMap();
+        anim = GetComponent<Animator>();
         
         moveAction = inputActions.Player.Move;
         jumpAction = inputActions.Player.Jump;
@@ -110,7 +113,7 @@ public class PlatformController : MonoBehaviour
             isGrounded = hit.collider != null;
         }
     }
-    
+
     private void MovePlayer()
     {
         // Apply horizontal movement
@@ -118,8 +121,19 @@ public class PlatformController : MonoBehaviour
             moveInput.x * moveSpeed,
             rb.linearVelocity.y
         );
+        anim.SetBool("IsMoving", rb.linearVelocity.magnitude > 0.1f);
+
+        if (rb.linearVelocity.x > 0.1f)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
+        else if (rb.linearVelocity.x < -0.1f)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
-    
+
+
     private void ApplyJumpPhysics()
     {
         // Better jump physics (variable jump height)
